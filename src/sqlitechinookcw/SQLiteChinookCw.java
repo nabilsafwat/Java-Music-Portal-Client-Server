@@ -38,7 +38,7 @@ public class SQLiteChinookCw {
 
         SQLiteChinookCw Server = new SQLiteChinookCw();
         Server.connectToClients();
-        SQLiteChinookCw app = new SQLiteChinookCw();
+        /*SQLiteChinookCw app = new SQLiteChinookCw();
         ArrayList<Track> trackList = new ArrayList<>();
         app.readAll(trackList);
 
@@ -55,33 +55,18 @@ public class SQLiteChinookCw {
         System.out.println("Server: Server starting.");
 
         try (ServerSocket serverSocket = new ServerSocket(2000)) {
-            int connectionCount = 0;
             
             while (true) {
                 System.out.println("Server: Waiting for connecting client...");
-                try (
+                
+                try {
                     Socket socket = serverSocket.accept();
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-                ) {
-                    connectionCount++;
-                    System.out.println("Server: Connection " + connectionCount + " established.");
-
-                    // Read and process names until an exception is thrown.
-                    System.out.println("Server: Waiting for data from client...");
-                    Parcel parcelRead;
                     
-                    while ((parcelRead = (Parcel)objectInputStream.readObject()) != null) {
-                        System.out.println("Server: Read data from client: " + parcelRead + ".");
-                        
-                        //String emailLookup = hashMapNames.getOrDefault(parcelRead.getUsername(), "User not known");
-                        
-                       // objectOutputStream.writeObject(new Parcel(parcelRead.getUsername(), emailLookup));
-                    }
-                } catch (SocketException | EOFException ex) {
-                    System.out.println("Server: We have lost connection to client " + connectionCount + ".");
-                } catch (ClassNotFoundException ex) {
-                    System.out.println("Server: Class of a serialized object cannot be found.");
+                    ClientHandlerThread clientHandlerThread = new ClientHandlerThread(socket);
+                    Thread connectionThread = new Thread(clientHandlerThread);
+                    connectionThread.start();
+                } catch (IOException ex) {
+                    System.out.println("Server: Could not start connection to a client.");
                 }
             }
         } catch (IOException ex) {
