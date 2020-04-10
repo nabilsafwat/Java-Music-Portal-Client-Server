@@ -139,8 +139,8 @@ public class MyGUI extends javax.swing.JFrame {
         try {
             socket = new Socket("127.0.0.1", 2000);
 
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             labelStatus.setText("Status: Connected to server");
         } catch (IOException ex) {
             Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);

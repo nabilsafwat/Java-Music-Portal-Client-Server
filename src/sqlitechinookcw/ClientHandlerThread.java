@@ -8,6 +8,8 @@ package sqlitechinookcw;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
@@ -30,8 +32,11 @@ public class ClientHandlerThread implements Runnable {
     private final Socket socket;
     //private final HashMap<String, String> hashMapNames;
     
-    private final PrintWriter printWriter;
-    private final BufferedReader bufferedReader;
+    //private final PrintWriter printWriter;
+    //private final BufferedReader bufferedReader;
+    
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
     
     private static int connectionCount = 0;
     private final int connectionNumber;
@@ -48,8 +53,11 @@ public class ClientHandlerThread implements Runnable {
         this.socket = socket;
         //this.hashMapNames = hashMapNames;
         
-        printWriter = new PrintWriter(socket.getOutputStream(), true);
-        bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        //objectInputStream = new ObjectInputStream(new InputStreamReader(socket.getInputStream()));
+        objectInputStream = new ObjectInputStream((socket.getInputStream()));
+        //printWriter = new PrintWriter(socket.getOutputStream(), true);
+        //bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         
         connectionCount++;
         connectionNumber = connectionCount;
@@ -68,7 +76,7 @@ public class ClientHandlerThread implements Runnable {
             // Read and process names until an exception is thrown.
             threadSays("Waiting for data from client...");
             String lineRead;
-            while ((lineRead = bufferedReader.readLine()) != null) {
+            while ((lineRead = objectInputStream.readLine()) != null) {
                 threadSays("Read data from client: \"" + lineRead + "\".");
                 
                 //String emailLookup = hashMapNames.getOrDefault(lineRead, "User not known");
@@ -91,6 +99,6 @@ public class ClientHandlerThread implements Runnable {
      * @param say the String to write to standard output stream.
      */
     private void threadSays(String say) {
-        System.out.println("ClientHandlerThread" + connectionNumber + ": " + say);
+        System.out.println("ConnectionNumber" + connectionNumber + ": " + say);
     }
 }

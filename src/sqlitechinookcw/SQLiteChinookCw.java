@@ -63,8 +63,8 @@ public class SQLiteChinookCw {
                     Socket socket = serverSocket.accept();
                     
                     ClientHandlerThread clientHandlerThread = new ClientHandlerThread(socket);
-                    Thread connectionThread = new Thread(clientHandlerThread);
-                    connectionThread.start();
+                    Thread newThread = new Thread(clientHandlerThread);
+                    newThread.start();
                 } catch (IOException ex) {
                     System.out.println("Server: Could not start connection to a client.");
                 }
