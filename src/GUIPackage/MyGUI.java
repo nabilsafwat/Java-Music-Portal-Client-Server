@@ -144,7 +144,8 @@ public class MyGUI extends javax.swing.JFrame {
             labelStatus.setText("Status: Connected to server");
         } catch (IOException ex) {
             Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
-            labelStatus.setText(ex.toString()); // connection failed
+            //labelStatus.setText(ex.toString()); // connection failed
+            labelStatus.setText("Status: Server not found!"); // connection failed
         }
     }
      
