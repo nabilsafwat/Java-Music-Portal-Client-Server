@@ -12,6 +12,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +42,7 @@ public class ClientHandlerThread implements Runnable {
     
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
+    ArrayList<Track> trackList = new ArrayList<>();
     
     private static int connectionCount = 0;
     private final int connectionNumber;
@@ -54,14 +60,14 @@ public class ClientHandlerThread implements Runnable {
         //this.hashMapNames = hashMapNames;
         
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        //objectInputStream = new ObjectInputStream(new InputStreamReader(socket.getInputStream()));
         objectInputStream = new ObjectInputStream((socket.getInputStream()));
-        //printWriter = new PrintWriter(socket.getOutputStream(), true);
-        //bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        
+       
+        
         
         connectionCount++;
         connectionNumber = connectionCount;
-        threadSays("Connection " + connectionNumber + " established.");
+        System.out.println("Connection " + connectionNumber + " established.");
     }
 
     /**
@@ -72,33 +78,103 @@ public class ClientHandlerThread implements Runnable {
      */
     @Override
     public void run() {
+        // Read and process names until an exception is thrown.
+        System.out.println("Waiting for data from client...");
+        
+        Parcel parcelRead;
+                    
         try {
-            // Read and process names until an exception is thrown.
-            threadSays("Waiting for data from client...");
-            String lineRead;
-            while ((lineRead = objectInputStream.readLine()) != null) {
-                threadSays("Read data from client: \"" + lineRead + "\".");
+            while ((parcelRead = (Parcel)objectInputStream.readObject()) != null) {
+                System.out.println("Server: Read data from client: " + parcelRead + ".");
                 
-                //String emailLookup = hashMapNames.getOrDefault(lineRead, "User not known");
-                //printWriter.println(emailLookup);
-            }
-        } catch (IOException ex) {
+                if(parcelRead.getTrack().getTrackSending() == true){
+                    
+                   callTheSynchroTracks(trackList);
+                   
+                   //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
+                   Track track = new Track(trackList);
+                   objectOutputStream.writeObject(new Parcel(track, null));
+                   
+                   
+                 }
+                        
+                        
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                threadSays("We have lost connection to client " + connectionNumber + ".");
-                socket.close();
-            } catch (IOException ex) {
-                Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                try {
+                    System.out.println("We have lost connection to client " + connectionNumber + ".");
+                    socket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+
+
+
+    public synchronized void callTheSynchroTracks(ArrayList<Track> populateList){
+
+        String selectSQL = "SELECT * FROM tracks limit 10"; // lets just get the first 10 records for testing
+
+        try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+
+            ResultSet resultSet = prep.executeQuery();
+
+            // now rows
+            while (resultSet.next()) {
+                Track track = new Track(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getInt(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5),
+                        resultSet.getString(6),
+                        resultSet.getInt(7),
+                        resultSet.getInt(8),
+                        resultSet.getDouble(9));
+                populateList.add(track);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    public synchronized void ReadTypes(ArrayList<Media_types> populateList) {
+
+        String selectSQL = "SELECT * FROM media_types limit 10"; // lets just get the first 10 records for testing
+
+        try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+
+            ResultSet resultSet = prep.executeQuery();
+
+            // now rows
+            while (resultSet.next()) {
+                Media_types media = new Media_types(
+                        resultSet.getInt(1),
+                        resultSet.getString(2));
+                
+                        
+                populateList.add(media);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    }
+    
+    
+
+
     /**
      * Private helper method outputs to standard output stream for debugging.
      * @param say the String to write to standard output stream.
      */
-    private void threadSays(String say) {
-        System.out.println("ConnectionNumber" + connectionNumber + ": " + say);
-    }
-}
+    
+

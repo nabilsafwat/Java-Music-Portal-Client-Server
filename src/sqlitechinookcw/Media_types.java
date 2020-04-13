@@ -8,7 +8,7 @@ package sqlitechinookcw;
 import java.io.Serializable;
 /**
  *
- * @author nadiaislam
+ * @author safwatn
  */
 public class Media_types implements Serializable {
     
@@ -43,5 +43,10 @@ public class Media_types implements Serializable {
        }
 
 
-
+       @Override
+       public String toString() {
+       return super.toString() + " | " + name + " | " + String.valueOf(mediaTypeId);
+    }
 }
+
+

@@ -38,18 +38,21 @@ public class SQLiteChinookCw {
 
         SQLiteChinookCw Server = new SQLiteChinookCw();
         Server.connectToClients();
-        /*SQLiteChinookCw app = new SQLiteChinookCw();
+        SQLiteChinookCw app = new SQLiteChinookCw();
+        ArrayList<Media_types> mediaList = new ArrayList<>();
         ArrayList<Track> trackList = new ArrayList<>();
-        app.readAll(trackList);
+        app.ReadTracks(trackList);
+        app.ReadTypes(mediaList);
 
         /*System.out.println("main: ");
-        for (Track t : trackList) {
+        for (Media_types t : trackList) {
             System.out.print(t);
             System.out.print(" | ");
             System.out.println("");
         } */
 
     }
+   
     
     private void connectToClients() {
         System.out.println("Server: Server starting.");
@@ -76,16 +79,11 @@ public class SQLiteChinookCw {
     }
 
     /**
-     * This function simply reads the first 10 records / rows from the tracks
-     * table in our SQLite database and then outputs them to the console for
-     * testing, it also parses the result set and puts the records into a
-     * data-structure. We have made it a synchronized method so that it prevents
-     * any issue with thread interference or data races.
      *
-     * @param populateList the data structure to populate with data from the
-     * database
+     * @param populateList
      */
-    public synchronized void readAll(ArrayList<Track> populateList) {
+    
+    public synchronized void ReadTracks(ArrayList<Track> populateList) {
 
         String selectSQL = "SELECT * FROM tracks limit 10"; // lets just get the first 10 records for testing
 
@@ -113,5 +111,31 @@ public class SQLiteChinookCw {
             Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public synchronized void ReadTypes(ArrayList<Media_types> populateList) {
+
+        String selectSQL = "SELECT * FROM media_types limit 10"; // lets just get the first 10 records for testing
+
+        try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+
+            ResultSet resultSet = prep.executeQuery();
+
+            // now rows
+            while (resultSet.next()) {
+                Media_types media = new Media_types(
+                        resultSet.getInt(1),
+                        resultSet.getString(2));
+                
+                        
+                populateList.add(media);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
 
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package GUIPackage;
-
+import sqlitechinookcw.Parcel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,12 +12,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sqlitechinookcw.Track;
 
 /**
  *
- * @author nadiaislam
+ * @author safwatn
  */
 public class MyGUI extends javax.swing.JFrame {
 
@@ -39,6 +41,15 @@ public class MyGUI extends javax.swing.JFrame {
 
         connectButton = new javax.swing.JButton();
         labelStatus = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        boxForMedia = new javax.swing.JTextArea();
+        listMediaTypes = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        boxForTrack = new javax.swing.JTextArea();
+        listTracks = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,28 +62,94 @@ public class MyGUI extends javax.swing.JFrame {
 
         labelStatus.setText("Status");
 
+        jLabel1.setText("Welcome to the Music Portal!");
+
+        jLabel2.setText("Tracks");
+
+        jLabel3.setText("Media Types");
+
+        boxForMedia.setColumns(20);
+        boxForMedia.setRows(5);
+        jScrollPane1.setViewportView(boxForMedia);
+
+        listMediaTypes.setText("View all media types");
+        listMediaTypes.setToolTipText("");
+        listMediaTypes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listMediaTypesActionPerformed(evt);
+            }
+        });
+
+        boxForTrack.setColumns(20);
+        boxForTrack.setRows(5);
+        jScrollPane2.setViewportView(boxForTrack);
+
+        listTracks.setText("View all tracks");
+        listTracks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listTracksActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(117, 117, 117)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(108, 108, 108))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(connectButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(connectButton, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(listTracks))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(listMediaTypes)
+                        .addGap(61, 61, 61))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(labelStatus)))
-                .addContainerGap(166, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelStatus)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(connectButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(connectButton)
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(listTracks)
+                            .addComponent(listMediaTypes))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(labelStatus)
-                .addGap(35, 35, 35))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -82,6 +159,16 @@ public class MyGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         reconnectToServer();
     }//GEN-LAST:event_connectButtonActionPerformed
+
+    private void listTracksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listTracksActionPerformed
+        // TODO add your handling code here:
+        listAllTracks();
+    }//GEN-LAST:event_listTracksActionPerformed
+
+    private void listMediaTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listMediaTypesActionPerformed
+        // TODO add your handling code here:
+        listAllMediaTypes();
+    }//GEN-LAST:event_listMediaTypesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,11 +239,64 @@ public class MyGUI extends javax.swing.JFrame {
      public void keepReadingFromServer() {
         while (true) {
             try {
-                String message = bufferedReader.readLine();
+                Object message;
+                message = objectInputStream.readObject();
+
             } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+     
+    private void listAllTracks(){
+        //Sending
+        if (objectOutputStream != null && objectInputStream != null) {
+            
+            Track track = new Track();
+            track.setTrackSending(true);
+            
+            
+            try {
+                objectOutputStream.writeObject(new Parcel(track, null));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            //Recieving
+            Parcel reply = null;
+            try {
+                reply = (Parcel)objectInputStream.readObject();
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            labelStatus.setText("Status: waiting for reply from server");
+            try {
+                reply = (Parcel) objectInputStream.readObject();
+                labelStatus.setText("Status: received reply from server");
+            } catch (IOException ex) {
+                labelStatus.setText("IOException " + ex);
+            } catch (ClassNotFoundException ex) {
+               labelStatus.setText("ClassNotFoundException " + ex);
+            }
+
+            // 4. display message on textarea
+            if (reply != null) {
+                boxForTrack.setText(reply.toString());
+            }
+         else {
+            labelStatus.setText("You must connect to the server first!!");
+        }
+        }
+        
+    }
+    
+    private void listAllMediaTypes() {
+        
+        
     }
      
     private PrintWriter printWriter;
@@ -165,7 +305,16 @@ public class MyGUI extends javax.swing.JFrame {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea boxForMedia;
+    private javax.swing.JTextArea boxForTrack;
     private javax.swing.JButton connectButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelStatus;
+    private javax.swing.JButton listMediaTypes;
+    private javax.swing.JButton listTracks;
     // End of variables declaration//GEN-END:variables
 }

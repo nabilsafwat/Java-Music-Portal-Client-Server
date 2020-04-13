@@ -6,6 +6,7 @@
 package sqlitechinookcw;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * A 'Bean' is a very simple class which basically forms a container object for
@@ -17,6 +18,7 @@ import java.io.Serializable;
  */
 public class Track implements Serializable {
 
+    private boolean trackSending;
     private int trackId;
     private String name;
     private int albumId;
@@ -26,6 +28,8 @@ public class Track implements Serializable {
     private int milliseconds;
     private int bytes;
     private double unitPrice;
+    private ArrayList<Track> tracks;
+    
 
     public Track(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice) {
         this.trackId = trackId;
@@ -38,7 +42,29 @@ public class Track implements Serializable {
         this.bytes = bytes;
         this.unitPrice = unitPrice;
     }
-
+    
+    public Track(ArrayList<Track> tracks){
+        this.tracks =  tracks;
+    
+    }
+    
+    public Track(){
+    
+    
+    }
+    
+    public boolean getTrackSending(){
+          
+        return trackSending;
+        
+    }
+    
+    public void setTrackSending(boolean trackSending){
+        
+        this.trackSending =  trackSending;
+        
+    }
+    
     public int getTrackId() {
         return trackId;
     }

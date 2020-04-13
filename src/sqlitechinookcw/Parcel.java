@@ -5,6 +5,7 @@
  */
 package sqlitechinookcw;
 
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
@@ -16,36 +17,35 @@ import java.io.Serializable;
  */
 public class Parcel implements Serializable {
     
-    private String username;
-    private String email;
+    private Track track;
+    private Media_types media;
 
     public Parcel() {
+    
     }
 
-    public Parcel(String username, String email) {
-        this.username = username;
-        this.email = email;
+    public Parcel(Track track, Media_types media){
+        this.track = track;
+        this.media = media;
+        
+        
     }
     
-    public String getEmail() {
-        return email;
+    public Track getTrack() {
+        return track;
     }
 
-    public String getUsername() {
-        return username;
+    public void setTrack(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice) {
+        
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public Media_types getMediaType() {
+        return media;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMediaType(int mediaTypeId, String name) {
+        
     }
 
-    @Override
-    public String toString() {
-        return ("username: \"" + username + "\" email: \"" + email + "\"");
-    }
-    
+        
 }
