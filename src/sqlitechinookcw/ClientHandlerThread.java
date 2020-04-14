@@ -88,12 +88,12 @@ public class ClientHandlerThread implements Runnable {
                 System.out.println("Server: Read data from client: " + parcelRead + ".");
                 
                 if(parcelRead.getTrack().getTrackSending() == true){
-                    
                    callTheSynchroTracks(trackList);
                    
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
                    Track track = new Track(trackList);
                    objectOutputStream.writeObject(new Parcel(track, null));
+                   System.out.println(objectOutputStream);
                    
                    
                  }
@@ -117,7 +117,7 @@ public class ClientHandlerThread implements Runnable {
 
     public synchronized void callTheSynchroTracks(ArrayList<Track> populateList){
 
-        String selectSQL = "SELECT * FROM tracks limit 10"; // lets just get the first 10 records for testing
+        String selectSQL = "SELECT * FROM tracks limit 10"; // lets just get the first 10 records
 
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {

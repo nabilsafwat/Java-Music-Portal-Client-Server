@@ -251,8 +251,8 @@ public class MyGUI extends javax.swing.JFrame {
     }
      
     private void listAllTracks(){
-        //Sending
-        if (objectOutputStream != null && objectInputStream != null) {
+            //Sending
+            if (objectOutputStream != null && objectInputStream != null) {
             
             Track track = new Track();
             track.setTrackSending(true);
@@ -268,23 +268,21 @@ public class MyGUI extends javax.swing.JFrame {
             Parcel reply = null;
             try {
                 reply = (Parcel)objectInputStream.readObject();
+                //reply = objectInputStream.readObject();
+                System.out.println(reply);
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
             labelStatus.setText("Status: waiting for reply from server");
-            try {
-                reply = (Parcel) objectInputStream.readObject();
-                labelStatus.setText("Status: received reply from server");
-            } catch (IOException ex) {
-                labelStatus.setText("IOException " + ex);
-            } catch (ClassNotFoundException ex) {
-               labelStatus.setText("ClassNotFoundException " + ex);
-            }
+            //reply = (Parcel)objectInputStream.readObject();
+            labelStatus.setText("Status: received reply from server");
 
             // 4. display message on textarea
+            
             if (reply != null) {
+                System.out.println(reply);
                 boxForTrack.setText(reply.toString());
             }
          else {
