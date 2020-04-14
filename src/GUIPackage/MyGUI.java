@@ -5,12 +5,9 @@
  */
 package GUIPackage;
 import sqlitechinookcw.Parcel;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -50,6 +47,8 @@ public class MyGUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         boxForTrack = new javax.swing.JTextArea();
         listTracks = new javax.swing.JButton();
+        printTracksButton = new javax.swing.JButton();
+        printMediaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +90,20 @@ public class MyGUI extends javax.swing.JFrame {
             }
         });
 
+        printTracksButton.setText("Print Tracks");
+        printTracksButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printTracksButtonActionPerformed(evt);
+            }
+        });
+
+        printMediaButton.setText("Print Media Types");
+        printMediaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printMediaButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,11 +134,15 @@ public class MyGUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelStatus)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(printTracksButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(printMediaButton)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(19, 19, 19))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,21 +150,25 @@ public class MyGUI extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(connectButton)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(connectButton)
-                        .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(listTracks)
-                            .addComponent(listMediaTypes))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(listMediaTypes, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(listTracks))
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(printTracksButton)
+                    .addComponent(printMediaButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(labelStatus)
                 .addGap(24, 24, 24))
         );
@@ -169,6 +190,14 @@ public class MyGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         listAllMediaTypes();
     }//GEN-LAST:event_listMediaTypesActionPerformed
+
+    private void printTracksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTracksButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printTracksButtonActionPerformed
+
+    private void printMediaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMediaButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printMediaButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,8 +311,9 @@ public class MyGUI extends javax.swing.JFrame {
             // 4. display message on textarea
             
             if (reply != null) {
+                
+                boxForTrack.setText(reply.getTrack().toString());
                 System.out.println(reply);
-                boxForTrack.setText(reply.toString());
             }
          else {
             labelStatus.setText("You must connect to the server first!!");
@@ -297,8 +327,7 @@ public class MyGUI extends javax.swing.JFrame {
         
     }
      
-    private PrintWriter printWriter;
-    private BufferedReader bufferedReader;
+    
     private Socket socket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
@@ -314,5 +343,7 @@ public class MyGUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelStatus;
     private javax.swing.JButton listMediaTypes;
     private javax.swing.JButton listTracks;
+    private javax.swing.JButton printMediaButton;
+    private javax.swing.JButton printTracksButton;
     // End of variables declaration//GEN-END:variables
 }

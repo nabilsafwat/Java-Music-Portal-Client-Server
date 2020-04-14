@@ -95,8 +95,7 @@ public class ClientHandlerThread implements Runnable {
                    objectOutputStream.writeObject(new Parcel(track, null));
                    System.out.println(objectOutputStream);
                    
-                   
-                 }
+                   }
                         
                         
                     }
