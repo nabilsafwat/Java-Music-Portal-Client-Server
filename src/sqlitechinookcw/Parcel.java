@@ -7,6 +7,7 @@ package sqlitechinookcw;
 
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * A parcel class for encapsulating the data we want to send back and forth.
@@ -19,7 +20,8 @@ public class Parcel implements Serializable {
     
     private Track track;
     private Media_types media;
-
+    
+            
     public Parcel() {
     
     }
@@ -31,20 +33,31 @@ public class Parcel implements Serializable {
         
     }
     
+    public ArrayList<Track> getTrackList(){
+        return getTrack().getTrackList();
+           
+    }
+    
     public Track getTrack() {
         return track;
-    }
-
-    public void setTrack(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice) {
-        
     }
 
     public Media_types getMediaType() {
         return media;
     }
-
-    public void setMediaType(int mediaTypeId, String name) {
-        
+    
+    
+    public String toString(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice) {
+        return toString() + " | "
+                + String.valueOf(trackId) + " | "
+                + name + " | "
+                + String.valueOf(albumId) + " | "
+                + String.valueOf(mediaTypeId) + " | "
+                + String.valueOf(genreId) + " | "
+                + composer + " | "
+                + String.valueOf(milliseconds) + " | "
+                + String.valueOf(bytes) + " | "
+                + String.valueOf(unitPrice);
     }
 
     

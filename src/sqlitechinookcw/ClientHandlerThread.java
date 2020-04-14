@@ -99,11 +99,9 @@ public class ClientHandlerThread implements Runnable {
                         
                         
                     }
-                } catch (IOException ex) {
+                } catch (IOException | ClassNotFoundException ex) {
                     Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                }
                 try {
                     System.out.println("We have lost connection to client " + connectionNumber + ".");
                     socket.close();
