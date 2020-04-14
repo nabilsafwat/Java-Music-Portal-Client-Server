@@ -43,9 +43,13 @@ public class ClientHandlerThread implements Runnable {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     ArrayList<Track> trackList = new ArrayList<>();
+    ArrayList<Media_types> mediaList = new ArrayList<>();
     
     private static int connectionCount = 0;
     private final int connectionNumber;
+    
+    Track track = new Track(trackList);
+    Media_types media = new Media_types(mediaList);
 
     /**
      * Constructor just initialises the connection to client.
@@ -91,14 +95,27 @@ public class ClientHandlerThread implements Runnable {
                    callTheSynchroTracks(trackList);
                    
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
-                   Track track = new Track(trackList);
-                   objectOutputStream.writeObject(new Parcel(track, null));
+                   //Track track = new Track(trackList);
+                   objectOutputStream.writeObject(new Parcel(track, media));
                    System.out.println(objectOutputStream);
                    
                    }
+                
+                
+                else if(parcelRead.getMedia().getMediaSending() == true){
+                   callTheSynchroMedia(mediaList);
+                   
+                   //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
+                   //Media_types media = new Media_types(mediaList);
+                   objectOutputStream.writeObject(new Parcel(track, media));
+                   System.out.println(objectOutputStream);
+                   
+                   }
+                
+                
                         
                         
-                    }
+            }
                 } catch (IOException | ClassNotFoundException ex) {
                     Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -141,7 +158,7 @@ public class ClientHandlerThread implements Runnable {
         }
     }
     
-    public synchronized void ReadTypes(ArrayList<Media_types> populateList) {
+    public synchronized void callTheSynchroMedia(ArrayList<Media_types> populateList) {
 
         String selectSQL = "SELECT * FROM media_types limit 10"; // lets just get the first 10 records for testing
 

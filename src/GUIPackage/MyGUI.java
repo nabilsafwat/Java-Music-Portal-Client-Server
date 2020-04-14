@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sqlitechinookcw.Media_types;
 import sqlitechinookcw.Track;
 
 /**
@@ -20,6 +21,8 @@ import sqlitechinookcw.Track;
  */
 public class MyGUI extends javax.swing.JFrame {
 
+    Track track = new Track();
+    Media_types media = new Media_types();
     /**
      * Creates new form MyGUI
      */
@@ -294,12 +297,12 @@ public class MyGUI extends javax.swing.JFrame {
             //Sending
             if (objectOutputStream != null && objectInputStream != null) {
             
-            Track track = new Track();
+            //Track track = new Track();
             track.setTrackSending(true);
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(track, null));
+                objectOutputStream.writeObject(new Parcel(track, media));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -313,7 +316,7 @@ public class MyGUI extends javax.swing.JFrame {
                 for(Track t : tracks){
                     System.out.print(t);
                     System.out.print(" | ");
-                    System.out.println("");
+                    System.out.println("\n");
                 }
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -329,7 +332,7 @@ public class MyGUI extends javax.swing.JFrame {
             if (reply != null) {
                 
                 boxForTrack.setText(reply.getTrackList().toString());
-                System.out.println(reply);
+                
             }
          else {
             labelStatus.setText("You must connect to the server first!!");
@@ -339,7 +342,50 @@ public class MyGUI extends javax.swing.JFrame {
     }
     
     private void listAllMediaTypes() {
-        
+        //Sending
+            if (objectOutputStream != null && objectInputStream != null) {
+            
+            //Media_types media = new Media_types();
+            media.setMediaSending(true);
+            
+            
+            try {
+                objectOutputStream.writeObject(new Parcel(track, media));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            //Recieving
+            Parcel reply = null;
+            try {
+                reply = (Parcel)objectInputStream.readObject();
+                //reply = objectInputStream.readObject();
+                ArrayList<Media_types> medias = reply.getMediaList();
+                for(Media_types m : medias){
+                    System.out.print(m);
+                    System.out.print(" | ");
+                    System.out.println("\n");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            labelStatus.setText("Status: waiting for reply from server");
+            //reply = (Parcel)objectInputStream.readObject();
+            labelStatus.setText("Status: received reply from server");
+
+            // 4. display message on textarea
+            
+            if (reply != null) {
+                
+                boxForMedia.setText(reply.getMediaList().toString());
+                
+            }
+         else {
+            labelStatus.setText("You must connect to the server first!!");
+        }
+        }
         
     }
      

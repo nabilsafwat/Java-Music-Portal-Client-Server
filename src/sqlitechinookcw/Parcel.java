@@ -38,28 +38,20 @@ public class Parcel implements Serializable {
            
     }
     
+    public ArrayList<Media_types> getMediaList(){
+        return getMedia().getMediaList();
+           
+    }
+    
     public Track getTrack() {
         return track;
     }
 
-    public Media_types getMediaType() {
+    public Media_types getMedia() {
         return media;
     }
     
     
-    public String toString(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice) {
-        return toString() + " | "
-                + String.valueOf(trackId) + " | "
-                + name + " | "
-                + String.valueOf(albumId) + " | "
-                + String.valueOf(mediaTypeId) + " | "
-                + String.valueOf(genreId) + " | "
-                + composer + " | "
-                + String.valueOf(milliseconds) + " | "
-                + String.valueOf(bytes) + " | "
-                + String.valueOf(unitPrice);
-    }
-
     
         
 }

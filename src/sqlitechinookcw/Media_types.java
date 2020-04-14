@@ -6,6 +6,7 @@
 package sqlitechinookcw;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 /**
  *
  * @author safwatn
@@ -14,6 +15,8 @@ public class Media_types implements Serializable {
     
        private int mediaTypeId;
        private String name;
+       private ArrayList<Media_types> media;
+       private boolean mediaSending;
        
        
        public Media_types(int mediaTypeId, String name){
@@ -40,6 +43,33 @@ public class Media_types implements Serializable {
        public void setName(String name) {
            this.name = name;
        
+       }
+       
+       public Media_types(){
+       
+       
+       }
+       
+       public Media_types(ArrayList<Media_types> media){
+        this.media =  media;
+    
+       }
+       
+       public ArrayList<Media_types> getMediaList(){
+        return this.media;
+           
+       }
+       
+       public boolean getMediaSending(){
+          
+        return mediaSending;
+        
+       }
+    
+       public void setMediaSending(boolean mediaSending){
+        
+        this.mediaSending =  mediaSending;
+        
        }
 
 

@@ -53,7 +53,6 @@ public class SQLiteChinookCw {
 
     }
    
-    
     private void connectToClients() {
         System.out.println("Server: Server starting.");
 
