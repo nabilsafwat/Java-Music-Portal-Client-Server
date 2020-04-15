@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import sqlitechinookcw.Media_types;
 import sqlitechinookcw.Track;
+import java.awt.print.*;
 
 /**
  *
@@ -207,10 +208,12 @@ public class MyGUI extends javax.swing.JFrame {
 
     private void printTracksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printTracksButtonActionPerformed
         // TODO add your handling code here:
+        printAllTracks();
     }//GEN-LAST:event_printTracksButtonActionPerformed
 
     private void printMediaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printMediaButtonActionPerformed
         // TODO add your handling code here:
+        printAllMedia();
     }//GEN-LAST:event_printMediaButtonActionPerformed
 
     /**
@@ -312,12 +315,12 @@ public class MyGUI extends javax.swing.JFrame {
             try {
                 reply = (Parcel)objectInputStream.readObject();
                 //reply = objectInputStream.readObject();
-                ArrayList<Track> tracks = reply.getTrackList();
+                /*ArrayList<Track> tracks = reply.getTrackList();
                 for(Track t : tracks){
                     System.out.print(t);
                     System.out.print(" | ");
                     System.out.println("\n");
-                }
+                }*/
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -375,7 +378,7 @@ public class MyGUI extends javax.swing.JFrame {
             //reply = (Parcel)objectInputStream.readObject();
             labelStatus.setText("Status: received reply from server");
 
-            // 4. display message on textarea
+            // Print the tracks
             
             if (reply != null) {
                 
@@ -387,6 +390,112 @@ public class MyGUI extends javax.swing.JFrame {
         }
         }
         
+    }
+    
+    
+    private void printAllTracks(){
+            
+            //Sending
+            if (objectOutputStream != null && objectInputStream != null) {
+            
+            //Media_types media = new Media_types();
+            track.setTrackSending(true);
+            
+            
+            try {
+                objectOutputStream.writeObject(new Parcel(track, media));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
+        
+            
+            //Recieving
+            Parcel reply = null;
+            try {
+                reply = (Parcel)objectInputStream.readObject();
+                
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            labelStatus.setText("Status: waiting for reply from server");
+            //reply = (Parcel)objectInputStream.readObject();
+            labelStatus.setText("Status: received reply from server");
+            
+            
+            if (reply != null) {
+                
+                    PrinterJob printer = PrinterJob.getPrinterJob(); // this method calls to setup a job for printing pages
+                    PageFormat pFormat = printer.defaultPage(); // the page is set to default size format and orientation
+ 
+   	            printer.printDialog(); // show the print dialog
+  
+                try {
+                    printer.print(); //if clicking ok in the print dialog, this will print the pages with the default format
+                }
+                catch (  PrinterException PrintException) { //catch the error during printing
+                }
+                
+            }
+            
+            else {
+            labelStatus.setText("You must connect to the server first!!");
+            }
+
+            
+            } 
+            
+    }
+    
+    private void printAllMedia(){
+            //Sending
+            if (objectOutputStream != null && objectInputStream != null) {
+            
+            //Media_types media = new Media_types();
+            media.setMediaSending(true);
+            
+            
+            try {
+                objectOutputStream.writeObject(new Parcel(track, media));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            //Recieving
+            Parcel reply = null;
+            try {
+                reply = (Parcel)objectInputStream.readObject();
+                //reply = objectInputStream.readObject();
+                
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            labelStatus.setText("Status: waiting for reply from server");
+            //reply = (Parcel)objectInputStream.readObject();
+            labelStatus.setText("Status: received reply from server");
+
+            // Print the tracks
+            
+            if (reply != null) {
+                
+                PrinterJob printer = PrinterJob.getPrinterJob(); // this method calls to setup a job for printing pages
+                PageFormat pFormat = printer.defaultPage(); // the page is set to default size format and orientation
+ 
+   	        printer.printDialog(); // show the print dialog
+  
+                try {
+                    printer.print(); //if clicking ok in the print dialog, this will print the pages with the default format
+                }
+                catch (  PrinterException PrintException) { //catch the error during printing
+                }
+                
+            }
+         else {
+            labelStatus.setText("You must connect to the server first!!");
+        }
+        }
+    
+    
     }
      
     
