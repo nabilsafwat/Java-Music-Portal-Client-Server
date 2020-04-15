@@ -153,7 +153,7 @@ public class Track implements Serializable {
                 + composer + " | "
                 + String.valueOf(milliseconds) + " | "
                 + String.valueOf(bytes) + " | "
-                + String.valueOf(unitPrice);
+                + String.valueOf(unitPrice) + "\n";
     }
 
 }

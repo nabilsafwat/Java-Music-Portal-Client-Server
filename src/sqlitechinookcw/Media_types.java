@@ -75,7 +75,7 @@ public class Media_types implements Serializable {
 
        @Override
        public String toString() {
-       return super.toString() + " | " + name + " | " + String.valueOf(mediaTypeId);
+       return super.toString() + " | " + name + " | " + String.valueOf(mediaTypeId) + "\n";
     }
 }
 

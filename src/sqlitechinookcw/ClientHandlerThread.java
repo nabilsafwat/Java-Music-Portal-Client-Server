@@ -131,7 +131,7 @@ public class ClientHandlerThread implements Runnable {
 
     public synchronized void callTheSynchroTracks(ArrayList<Track> populateList){
 
-        String selectSQL = "SELECT * FROM tracks limit 10"; // lets just get the first 10 records
+        String selectSQL = "SELECT * FROM tracks"; // Print all tracks on screen
 
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {
@@ -160,7 +160,7 @@ public class ClientHandlerThread implements Runnable {
     
     public synchronized void callTheSynchroMedia(ArrayList<Media_types> populateList) {
 
-        String selectSQL = "SELECT * FROM media_types limit 10"; // lets just get the first 10 records for testing
+        String selectSQL = "SELECT * FROM media_types"; // Print all media types on screen
 
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {

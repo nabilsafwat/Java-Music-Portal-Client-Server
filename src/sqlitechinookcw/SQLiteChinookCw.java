@@ -84,7 +84,7 @@ public class SQLiteChinookCw {
     
     public synchronized void ReadTracks(ArrayList<Track> populateList) {
 
-        String selectSQL = "SELECT * FROM tracks limit 10"; // lets just get the first 10 records for testing
+        String selectSQL = "SELECT * FROM tracks"; // lets just get the first 10 records for testing limit 10
 
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {
@@ -113,7 +113,7 @@ public class SQLiteChinookCw {
     
     public synchronized void ReadTypes(ArrayList<Media_types> populateList) {
 
-        String selectSQL = "SELECT * FROM media_types limit 10"; // lets just get the first 10 records for testing
+        String selectSQL = "SELECT * FROM media_types"; // lets just get the first 10 records for testing
 
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {
