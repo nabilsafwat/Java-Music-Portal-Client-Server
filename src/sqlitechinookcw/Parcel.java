@@ -5,6 +5,7 @@
  */
 package sqlitechinookcw;
 
+import java.awt.print.PrinterJob;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +50,10 @@ public class Parcel implements Serializable {
 
     public Media_types getMedia() {
         return media;
+    }
+
+    public void silentPrint(PrinterJob printJob) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
