@@ -35,21 +35,12 @@ public class SQLiteChinookCw {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
 
         SQLiteChinookCw Server = new SQLiteChinookCw();
         Server.connectToClients();
-        SQLiteChinookCw app = new SQLiteChinookCw();
-        ArrayList<Media_types> mediaList = new ArrayList<>();
-        ArrayList<Track> trackList = new ArrayList<>();
-        app.ReadTracks(trackList);
-        app.ReadTypes(mediaList);
-
-        /*System.out.println("main: ");
-        for (Media_types t : trackList) {
-            System.out.print(t);
-            System.out.print(" | ");
-            System.out.println("");
-        } */
+        
 
     }
    
@@ -82,59 +73,4 @@ public class SQLiteChinookCw {
      * @param populateList
      */
     
-    public synchronized void ReadTracks(ArrayList<Track> populateList) {
-
-        String selectSQL = "SELECT * FROM tracks"; // lets just get the first 10 records for testing limit 10
-
-        try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
-                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
-
-            ResultSet resultSet = prep.executeQuery();
-
-            // now rows
-            while (resultSet.next()) {
-                Track track = new Track(
-                        resultSet.getInt(1),
-                        resultSet.getString(2),
-                        resultSet.getInt(3),
-                        resultSet.getInt(4),
-                        resultSet.getInt(5),
-                        resultSet.getString(6),
-                        resultSet.getInt(7),
-                        resultSet.getInt(8),
-                        resultSet.getDouble(9));
-                populateList.add(track);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public synchronized void ReadTypes(ArrayList<Media_types> populateList) {
-
-        String selectSQL = "SELECT * FROM media_types"; // lets just get the first 10 records for testing
-
-        try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
-                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
-
-            ResultSet resultSet = prep.executeQuery();
-
-            // now rows
-            while (resultSet.next()) {
-                Media_types media = new Media_types(
-                        resultSet.getInt(1),
-                        resultSet.getString(2));
-                
-                        
-                populateList.add(media);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    
-
-}
+ }

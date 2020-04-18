@@ -111,17 +111,13 @@ public class ClientHandlerThread implements Runnable {
                 
                 else if(parcelRead.getTrack().getTrackAdding() == true){
                   
-                  callTheInsertTrack();
+                  callTheInsertTrack(parcelRead.getTrack().getTrackId(),parcelRead.getTrack().getName(),parcelRead.getTrack().getAlbumId(),parcelRead.getTrack().getMediaTypeId(),parcelRead.getTrack().getGenreId(),parcelRead.getTrack().getComposer(),parcelRead.getTrack().getMilliseconds(),parcelRead.getTrack().getBytes(),parcelRead.getTrack().getUnitPrice());
                 
                 
                 
                 }
                 
                
-                
-                
-                        
-                        
             }
                 } catch (IOException | ClassNotFoundException ex) {
                     Logger.getLogger(ClientHandlerThread.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,7 +184,59 @@ public class ClientHandlerThread implements Runnable {
             Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+
+    public synchronized void callTheInsertTrack(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice){
+    
+         String selectSQL = "INSERT INTO Track(trackId,name,albumId,mediaTypeId,genreId,composer,milliseconds,bytes,unitPrice) VALUES (?,?,?,?,?,?,?,?,?)";
+    
+         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+             
+                  
+                  prep.setInt(1, trackId);
+                  prep.setString(2, name);
+                  prep.setInt(3, albumId);
+                  prep.setInt(4, mediaTypeId);
+                  prep.setInt(5, genreId);
+                  prep.setString(6, composer);
+                  prep.setInt(7, milliseconds);
+                  prep.setInt(8, bytes);
+                  prep.setDouble(9, unitPrice);
+                  
+                  prep.executeUpdate();
+                  
+                 
+    
+         } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+         
+    /*public synchronized void callTheInsertMedia(int mediaTypeId,String name){
+    
+         String selectSQL = "INSERT INTO Media_types(trackID,name,albumId,mediaTypeId) VALUES (?,?,?,?,?,?,?,?,?)";
+    
+         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+             
+                  prep.setInt(1, mediaTypeId);
+                  prep.setString(2, name);
+                  
+                  prep.executeUpdate();
+                 
+    
+         } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }*/
+
+
+
     }
+} 
+
     
     
 
