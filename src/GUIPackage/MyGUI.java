@@ -27,6 +27,8 @@ public class MyGUI extends javax.swing.JFrame {
 
     Track track = new Track();
     Media_types media = new Media_types();
+    
+    
     /**
      * Creates new form MyGUI
      */
@@ -80,7 +82,7 @@ public class MyGUI extends javax.swing.JFrame {
         insertTrackName = new javax.swing.JTextField();
         addTrackButton = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        insertMediaID = new javax.swing.JTextField();
+        insertMediaId = new javax.swing.JTextField();
         insertTypeName = new javax.swing.JLabel();
         addMediaButton = new javax.swing.JButton();
         insertMediaTypeName = new javax.swing.JTextField();
@@ -186,6 +188,11 @@ public class MyGUI extends javax.swing.JFrame {
         insertTypeName.setText("Name of Type");
 
         addMediaButton.setText("Add Media Type");
+        addMediaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMediaButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -294,7 +301,7 @@ public class MyGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(insertMediaID, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(insertMediaId, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(insertMediaTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -362,7 +369,7 @@ public class MyGUI extends javax.swing.JFrame {
                     .addComponent(insertTypeName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(insertMediaID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(insertMediaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(insertMediaTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(addMediaButton)
@@ -405,6 +412,11 @@ public class MyGUI extends javax.swing.JFrame {
     private void insertAlbumIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlbumIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_insertAlbumIdActionPerformed
+
+    private void addMediaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMediaButtonActionPerformed
+        // TODO add your handling code here:
+        addTheMedia();
+    }//GEN-LAST:event_addMediaButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -696,6 +708,7 @@ public class MyGUI extends javax.swing.JFrame {
     
         if (objectOutputStream != null && objectInputStream != null) {
             
+            track.setTrackAdding(true);
             //Send data from Textfields
             
             Track userInputTrack = new Track();
@@ -707,9 +720,10 @@ public class MyGUI extends javax.swing.JFrame {
             userInputTrack.composer = insertComposer.getText();
             userInputTrack.milliseconds = Integer.parseInt(insertMilliseconds.getText());
             userInputTrack.bytes = Integer.parseInt(insertBytes.getText());
-            userInputTrack.unitPrice = Integer.parseInt(insertUnitPrice.getText());
+            System.out.println(insertUnitPrice.getText());
+            userInputTrack.unitPrice = Double.parseDouble(insertUnitPrice.getText());
             
-            /*String sendTrackID = insertTrackId.getText();
+            /*String sendTrackID = iertTrackId.getText();
             String sendTrackName = insertTrackName.getText();
             String sendAlbumID = insertAlbumId.getText();
             String sendMediaTypeID = insertMediaTypeId.getText();
@@ -719,10 +733,35 @@ public class MyGUI extends javax.swing.JFrame {
             String sendBytes = insertBytes.getText();
             String sendUnitPrice = insertUnitPrice.getText();*/
             
-            track.setTrackAdding(true);
+            //track.setTrackAdding(true);
             
             try {
                 objectOutputStream.writeObject(new Parcel(userInputTrack, null));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
+    private void addTheMedia(){
+    
+        if (objectOutputStream != null && objectInputStream != null) {
+            
+            
+            media.setMediaAdding(true);
+            //Send data from Textfields
+            
+            
+            Media_types userInputMedia = new Media_types();
+            userInputMedia.name = insertMediaTypeName.getText();
+            userInputMedia.mediaTypeId = Integer.parseInt(insertMediaId.getText());
+            
+            
+            
+            
+            try {
+                objectOutputStream.writeObject(new Parcel(null, userInputMedia));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -744,7 +783,7 @@ public class MyGUI extends javax.swing.JFrame {
     private javax.swing.JTextField insertBytes;
     private javax.swing.JTextField insertComposer;
     private javax.swing.JTextField insertGenreId;
-    private javax.swing.JTextField insertMediaID;
+    private javax.swing.JTextField insertMediaId;
     private javax.swing.JTextField insertMediaTypeId;
     private javax.swing.JTextField insertMediaTypeName;
     private javax.swing.JTextField insertMilliseconds;

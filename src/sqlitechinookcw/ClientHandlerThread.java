@@ -89,7 +89,7 @@ public class ClientHandlerThread implements Runnable {
             while ((parcelRead = (Parcel)objectInputStream.readObject()) != null) {
                 System.out.println("Server: Read data from client: " + parcelRead + ".");
                 
-                if(parcelRead.getTrack().getTrackSending() == true){
+                if(parcelRead.getTrack()!= null && parcelRead.getTrack().getTrackSending() == true){
                    callTheSynchroTracks(trackList);
                    
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
@@ -99,7 +99,7 @@ public class ClientHandlerThread implements Runnable {
                    }
                 
                 
-                else if(parcelRead.getMedia().getMediaSending() == true){
+                else if(parcelRead.getMedia()!= null && parcelRead.getMedia().getMediaSending() == true){
                    callTheSynchroMedia(mediaList);
                    
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
@@ -109,10 +109,18 @@ public class ClientHandlerThread implements Runnable {
                    }
                 
                 
-                else if(parcelRead.getTrack().getTrackAdding() == true){
+                else if(parcelRead.getTrack()!= null && parcelRead.getTrack().getTrackAdding() == true){
                   
                   callTheInsertTrack(parcelRead.getTrack().getTrackId(),parcelRead.getTrack().getName(),parcelRead.getTrack().getAlbumId(),parcelRead.getTrack().getMediaTypeId(),parcelRead.getTrack().getGenreId(),parcelRead.getTrack().getComposer(),parcelRead.getTrack().getMilliseconds(),parcelRead.getTrack().getBytes(),parcelRead.getTrack().getUnitPrice());
                 
+                
+                
+                }
+                
+                
+                else if(parcelRead.getMedia()!= null && parcelRead.getMedia().getMediaAdding() == true){
+                
+                  callTheInsertMedia(parcelRead.getMedia().getName(),parcelRead.getMedia().getMediaTypeId());
                 
                 
                 }
@@ -212,16 +220,16 @@ public class ClientHandlerThread implements Runnable {
             Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
         }
     
-         
-    /*public synchronized void callTheInsertMedia(int mediaTypeId,String name){
+    }  
+    public synchronized void callTheInsertMedia(String name,int mediaTypeId){
     
-         String selectSQL = "INSERT INTO Media_types(trackID,name,albumId,mediaTypeId) VALUES (?,?,?,?,?,?,?,?,?)";
+         String selectSQL = "INSERT INTO Media_types(name,mediaTypeId) VALUES (?,?)";
     
          try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {
-             
-                  prep.setInt(1, mediaTypeId);
-                  prep.setString(2, name);
+                  
+                  prep.setString(1, name);
+                  prep.setInt(2, mediaTypeId);
                   
                   prep.executeUpdate();
                  
@@ -230,12 +238,12 @@ public class ClientHandlerThread implements Runnable {
             Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
         }
     
-    }*/
+    }
 
 
 
     }
-} 
+ 
 
     
     

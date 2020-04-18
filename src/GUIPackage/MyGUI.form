@@ -186,7 +186,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                              <Component id="insertMediaID" min="-2" pref="79" max="-2" attributes="0"/>
+                              <Component id="insertMediaId" min="-2" pref="79" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="insertMediaTypeName" min="-2" pref="173" max="-2" attributes="0"/>
                           </Group>
@@ -269,7 +269,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="insertMediaID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="insertMediaId" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="insertMediaTypeName" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -460,7 +460,7 @@
         <Property name="text" type="java.lang.String" value="MediaType ID"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="insertMediaID">
+    <Component class="javax.swing.JTextField" name="insertMediaId">
     </Component>
     <Component class="javax.swing.JLabel" name="insertTypeName">
       <Properties>
@@ -471,6 +471,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add Media Type"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addMediaButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="insertMediaTypeName">
     </Component>
