@@ -5,22 +5,19 @@
  */
 package sqlitechinookcw;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.print.*;
+
 
 /**
  * This is our thread class with the responsibility of handling client requests
@@ -98,7 +95,6 @@ public class ClientHandlerThread implements Runnable {
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
                    //Track track = new Track(trackList);
                    objectOutputStream.writeObject(new Parcel(track, media));
-                   System.out.println(objectOutputStream);
                    
                    }
                 
@@ -109,9 +105,17 @@ public class ClientHandlerThread implements Runnable {
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
                    //Media_types media = new Media_types(mediaList);
                    objectOutputStream.writeObject(new Parcel(track, media));
-                   System.out.println(objectOutputStream);
                    
                    }
+                
+                
+                else if(parcelRead.getTrack().getTrackAdding() == true){
+                  
+                  callTheInsertTrack();
+                
+                
+                
+                }
                 
                
                 

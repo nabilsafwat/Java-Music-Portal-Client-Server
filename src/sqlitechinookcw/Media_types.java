@@ -13,10 +13,11 @@ import java.util.ArrayList;
  */
 public class Media_types implements Serializable {
     
-       private int mediaTypeId;
-       private String name;
+       public int mediaTypeId;
+       public String name;
        private ArrayList<Media_types> media;
        private boolean mediaSending;
+       private boolean mediaAdding;
        
        
        public Media_types(int mediaTypeId, String name){
@@ -71,7 +72,18 @@ public class Media_types implements Serializable {
         this.mediaSending =  mediaSending;
         
        }
-
+       
+       public boolean getMediaAdding(){
+    
+         return mediaAdding;
+    
+       }
+    
+       public void setMediaAdding(){
+    
+         this.mediaAdding = mediaAdding;
+    
+       }
 
        @Override
        public String toString() {

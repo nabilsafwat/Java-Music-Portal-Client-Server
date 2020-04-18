@@ -19,16 +19,17 @@ import java.util.ArrayList;
 public class Track implements Serializable {
 
     private boolean trackSending;
-    private int trackId;
-    private String name;
-    private int albumId;
-    private int mediaTypeId;
-    private int genreId;
-    private String composer;
-    private int milliseconds;
-    private int bytes;
-    private double unitPrice;
-    private ArrayList<Track> tracks;
+    private boolean trackAdding;
+    public int trackId;
+    public String name;
+    public int albumId;
+    public int mediaTypeId;
+    public int genreId;
+    public String composer;
+    public int milliseconds;
+    public int bytes;
+    public double unitPrice;
+    public ArrayList<Track> tracks;
     
 
     public Track(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice) {
@@ -55,6 +56,18 @@ public class Track implements Serializable {
     
     public Track(){
     
+    
+    }
+    
+    public boolean getTrackAdding(){
+    
+         return trackAdding;
+    
+    }
+    
+    public void setTrackAdding(boolean trackAdding){
+    
+         this.trackAdding = trackAdding;
     
     }
     
