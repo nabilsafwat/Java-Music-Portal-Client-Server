@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.sql.DriverManager;
 
 /**
  * This is our thread class with the responsibility of handling client requests
@@ -106,19 +106,18 @@ public class ClientHandlerThread implements Runnable {
                    //Media_types media = new Media_types(mediaList);
                    objectOutputStream.writeObject(new Parcel(track, media));
                    
-                   }
+                 } 
                 
                 
-                else if(parcelRead.getTrack()!= null && parcelRead.getTrack().getTrackAdding() == true){
+                else if(parcelRead.getTrack() != null && parcelRead.getTrack().getTrackAdding() == true){
                   
                   callTheInsertTrack(parcelRead.getTrack().getTrackId(),parcelRead.getTrack().getName(),parcelRead.getTrack().getAlbumId(),parcelRead.getTrack().getMediaTypeId(),parcelRead.getTrack().getGenreId(),parcelRead.getTrack().getComposer(),parcelRead.getTrack().getMilliseconds(),parcelRead.getTrack().getBytes(),parcelRead.getTrack().getUnitPrice());
                 
                 
-                
                 }
+                //parcelRead.getTrack()!= null && parcelRead.getMedia()!= null && 
                 
-                
-                else if(parcelRead.getMedia()!= null && parcelRead.getMedia().getMediaAdding() == true){
+                else if(parcelRead.getMedia() != null && parcelRead.getMedia().getMediaAdding() == true){
                 
                   callTheInsertMedia(parcelRead.getMedia().getName(),parcelRead.getMedia().getMediaTypeId());
                 
@@ -195,11 +194,11 @@ public class ClientHandlerThread implements Runnable {
     
 
     public synchronized void callTheInsertTrack(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice){
+         
+         String selectSQL = "INSERT INTO Tracks(trackId,name,albumId,mediaTypeId,genreId,composer,milliseconds,bytes,unitPrice) VALUES(?,?,?,?,?,?,?,?,?)";
     
-         String selectSQL = "INSERT INTO Track(trackId,name,albumId,mediaTypeId,genreId,composer,milliseconds,bytes,unitPrice) VALUES (?,?,?,?,?,?,?,?,?)";
-    
-         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
-                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+         try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                 PreparedStatement prep = conn.prepareStatement(selectSQL);) {
              
                   
                   prep.setInt(1, trackId);
@@ -222,7 +221,7 @@ public class ClientHandlerThread implements Runnable {
     
     }  
     public synchronized void callTheInsertMedia(String name,int mediaTypeId){
-    
+         
          String selectSQL = "INSERT INTO Media_types(name,mediaTypeId) VALUES (?,?)";
     
          try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try

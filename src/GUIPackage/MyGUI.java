@@ -708,20 +708,22 @@ public class MyGUI extends javax.swing.JFrame {
     
         if (objectOutputStream != null && objectInputStream != null) {
             
-            track.setTrackAdding(true);
+            
             //Send data from Textfields
             
-            Track userInputTrack = new Track();
-            userInputTrack.trackId = Integer.parseInt(insertTrackId.getText());
-            userInputTrack.name = insertTrackName.getText();
-            userInputTrack.albumId = Integer.parseInt(insertAlbumId.getText());
-            userInputTrack.mediaTypeId = Integer.parseInt(insertMediaTypeId.getText());
-            userInputTrack.genreId = Integer.parseInt(insertGenreId.getText());
-            userInputTrack.composer = insertComposer.getText();
-            userInputTrack.milliseconds = Integer.parseInt(insertMilliseconds.getText());
-            userInputTrack.bytes = Integer.parseInt(insertBytes.getText());
-            System.out.println(insertUnitPrice.getText());
-            userInputTrack.unitPrice = Double.parseDouble(insertUnitPrice.getText());
+            //Track userInputTrack = new Track();
+            track.trackId = Integer.parseInt(insertTrackId.getText());
+            track.name = insertTrackName.getText();
+            track.albumId = Integer.parseInt(insertAlbumId.getText());
+            track.mediaTypeId = Integer.parseInt(insertMediaTypeId.getText());
+            track.genreId = Integer.parseInt(insertGenreId.getText());
+            track.composer = insertComposer.getText();
+            track.milliseconds = Integer.parseInt(insertMilliseconds.getText());
+            track.bytes = Integer.parseInt(insertBytes.getText());
+            //System.out.println(insertUnitPrice.getText());
+            track.unitPrice = Double.parseDouble(insertUnitPrice.getText());
+            
+            track.setTrackAdding(true);
             
             /*String sendTrackID = iertTrackId.getText();
             String sendTrackName = insertTrackName.getText();
@@ -736,7 +738,7 @@ public class MyGUI extends javax.swing.JFrame {
             //track.setTrackAdding(true);
             
             try {
-                objectOutputStream.writeObject(new Parcel(userInputTrack, null));
+                objectOutputStream.writeObject(new Parcel(track, null));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -749,19 +751,21 @@ public class MyGUI extends javax.swing.JFrame {
         if (objectOutputStream != null && objectInputStream != null) {
             
             
-            media.setMediaAdding(true);
+            
             //Send data from Textfields
             
             
-            Media_types userInputMedia = new Media_types();
-            userInputMedia.name = insertMediaTypeName.getText();
-            userInputMedia.mediaTypeId = Integer.parseInt(insertMediaId.getText());
+            //Media_types userInputMedia = new Media_types();
+            media.name = insertMediaTypeName.getText();
+            media.mediaTypeId = Integer.parseInt(insertMediaId.getText());
+            
+            media.setMediaAdding(true);
             
             
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(null, userInputMedia));
+                objectOutputStream.writeObject(new Parcel(null, media));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
