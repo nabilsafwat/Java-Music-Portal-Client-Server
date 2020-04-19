@@ -855,7 +855,26 @@ public class MyGUI extends javax.swing.JFrame {
     
     }
     
-    private void deleteTheMedia(){}
+    private void deleteTheMedia(){
+    
+        if (objectOutputStream != null && objectInputStream != null) {
+    
+             media.mediaTypeId = Integer.parseInt(deleteMediaId.getText());
+    
+             media.setMediaDeleting(true);
+             
+             try {
+                objectOutputStream.writeObject(new Parcel(null, media));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
+        }
+    
+    
+    
+    
+    }
      
     
     private Socket socket;

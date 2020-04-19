@@ -132,6 +132,14 @@ public class ClientHandlerThread implements Runnable {
                 
                 }
                 
+                
+                else if(parcelRead.getMedia() != null && parcelRead.getMedia().getMediaDeleting() == true){
+                
+                  callTheDeleteMedia(parcelRead.getMedia().getMediaTypeId());
+                
+                
+                }
+                
                
             }
                 } catch (IOException | ClassNotFoundException ex) {
@@ -250,12 +258,34 @@ public class ClientHandlerThread implements Runnable {
     
     public synchronized void callTheDeleteTrack(int trackId){
 
-        String selectSQL = "DELETE FROM Tracks WHERE TrackId = trackId";
+        String selectSQL = "DELETE FROM Tracks WHERE TrackId = ?";
         
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                   PreparedStatement prep = conn.prepareStatement(selectSQL);) {
                   
                   prep.setInt(1, trackId);
+                 
+                  
+                  prep.executeUpdate();
+                 
+    
+         } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    
+    }
+    
+    
+    public synchronized void callTheDeleteMedia(int mediaTypeId){
+    
+        String selectSQL = "DELETE FROM Media_types WHERE mediaTypeId = ?";
+        
+        try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+                  
+                  prep.setInt(1, mediaTypeId);
                  
                   
                   prep.executeUpdate();
