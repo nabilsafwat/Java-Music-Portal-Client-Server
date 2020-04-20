@@ -140,6 +140,22 @@ public class ClientHandlerThread implements Runnable {
                 
                 }
                 
+                
+                else if(parcelRead.getTrack() != null && parcelRead.getTrack().getTrackEditing() == true){
+                
+                  callTheEditTrack(parcelRead.getTrack().getTrackId(),parcelRead.getTrack().getName(),parcelRead.getTrack().getAlbumId(),parcelRead.getTrack().getMediaTypeId(),parcelRead.getTrack().getGenreId(),parcelRead.getTrack().getComposer(),parcelRead.getTrack().getMilliseconds(),parcelRead.getTrack().getBytes(),parcelRead.getTrack().getUnitPrice());
+                
+                
+                }
+                
+                
+                else if(parcelRead.getMedia() != null && parcelRead.getMedia().getMediaEditing() == true){
+                
+                
+                  callTheEditMedia(parcelRead.getMedia().getName(),parcelRead.getMedia().getMediaTypeId());
+                
+                }
+                
                
             }
                 } catch (IOException | ClassNotFoundException ex) {
@@ -298,13 +314,61 @@ public class ClientHandlerThread implements Runnable {
     
     
     }
+    
+    
+    public synchronized void callTheEditTrack(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice){
+         
+         String selectSQL = "UPDATE Tracks SET name = ?" + "albumId = ?" + "mediaTypeId = ?" + "genreId = ?" + "composer = ?" + "milliseconds = ?" + "bytes = ?" + "unitPrice = ?" + "WHERE trackId = ?";
+         try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                 PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+             
+                  prep.setString(1, name);
+                  prep.setInt(2, albumId);
+                  prep.setInt(3, mediaTypeId);
+                  prep.setInt(4, genreId);
+                  prep.setString(5, composer);
+                  prep.setInt(6, milliseconds);
+                  prep.setInt(7, bytes);
+                  prep.setDouble(8, unitPrice);
+                  prep.setInt(9, trackId);
+                  
+                  prep.executeUpdate();
+                  
+                 
+    
+         } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    
+    public synchronized void callTheEditMedia(String name,int mediaTypeId){
+    
+        String selectSQL = "UPDATE Media_types SET name = ?," + "mediaTypeId = ?" + "WHERE mediaTypeId = ?";
+         try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
+                 PreparedStatement prep = conn.prepareStatement(selectSQL);) {
+             
+                  prep.setString(1, name);
+                  prep.setInt(2, mediaTypeId);
+                  
+                  
+                  prep.executeUpdate();
+                  
+                 
+    
+         } catch (SQLException ex) {
+            Logger.getLogger(SQLiteChinookCw.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    
+    
+    
+    }
   
 }
  
-
-    
-    
-
 
     /**
      * Private helper method outputs to standard output stream for debugging.

@@ -110,7 +110,7 @@ public class MyGUI extends javax.swing.JFrame {
         editComposer = new javax.swing.JTextField();
         editMilliseconds = new javax.swing.JTextField();
         editBytes = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        editUnitPrice = new javax.swing.JTextField();
         editTrackButton = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -265,6 +265,11 @@ public class MyGUI extends javax.swing.JFrame {
         jLabel27.setText("Unit Price");
 
         editTrackButton.setText("Edit Track");
+        editTrackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editTrackButtonActionPerformed(evt);
+            }
+        });
 
         jLabel28.setText("Edit a Media Type");
 
@@ -273,6 +278,11 @@ public class MyGUI extends javax.swing.JFrame {
         jLabel30.setText("Name of Type");
 
         editMediaTypeButton.setText("Edit Media Type");
+        editMediaTypeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMediaTypeButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -466,7 +476,7 @@ public class MyGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(editBytes, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(editUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -594,7 +604,7 @@ public class MyGUI extends javax.swing.JFrame {
                                     .addComponent(editComposer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(editMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(editBytes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(editUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(editTrackButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
@@ -663,6 +673,16 @@ public class MyGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         deleteTheMedia();
     }//GEN-LAST:event_deleteMediaButtonActionPerformed
+
+    private void editTrackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editTrackButtonActionPerformed
+        // TODO add your handling code here:
+        editTheTrack();
+    }//GEN-LAST:event_editTrackButtonActionPerformed
+
+    private void editMediaTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMediaTypeButtonActionPerformed
+        // TODO add your handling code here:
+        editTheMedia();
+    }//GEN-LAST:event_editMediaTypeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1071,6 +1091,55 @@ public class MyGUI extends javax.swing.JFrame {
     
     
     }
+    
+    
+    private void editTheTrack(){
+    
+        if (objectOutputStream != null && objectInputStream != null) {
+            
+            track.trackId = Integer.parseInt(editTrackId.getText());
+            track.name = editTrackName.getText();
+            track.albumId = Integer.parseInt(editAlbumId.getText());
+            track.mediaTypeId = Integer.parseInt(editMediaTypeId.getText());
+            track.genreId = Integer.parseInt(editGenreId.getText());
+            track.composer = editComposer.getText();
+            track.milliseconds = Integer.parseInt(editMilliseconds.getText());
+            track.bytes = Integer.parseInt(editBytes.getText());
+            //System.out.println(insertUnitPrice.getText());
+            track.unitPrice = Double.parseDouble(editUnitPrice.getText());
+            
+            track.setTrackEditing(true);
+            
+            try {
+                objectOutputStream.writeObject(new Parcel(track, null));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+             labelStatus.setText("Status: Data sent to Server");
+    
+        }
+    }
+    
+    private void editTheMedia(){
+    
+        if (objectOutputStream != null && objectInputStream != null) {
+    
+           media.mediaTypeId = Integer.parseInt(editMediaId.getText());
+           media.name = editMediaTypeName.getText();
+           
+           media.setMediaEditing(true);
+           
+           try {
+                objectOutputStream.writeObject(new Parcel(null, media));
+            } catch (IOException ex) {
+                Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             
+             labelStatus.setText("Status: Data sent to Server");
+    
+        }
+    }
      
     
     private Socket socket;
@@ -1098,6 +1167,7 @@ public class MyGUI extends javax.swing.JFrame {
     private javax.swing.JButton editTrackButton;
     private javax.swing.JTextField editTrackId;
     private javax.swing.JTextField editTrackName;
+    private javax.swing.JTextField editUnitPrice;
     private javax.swing.JTextField insertAlbumId;
     private javax.swing.JTextField insertBytes;
     private javax.swing.JTextField insertComposer;
@@ -1144,7 +1214,6 @@ public class MyGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel labelStatus;
     private javax.swing.JButton listMediaTypes;
     private javax.swing.JButton listTracks;

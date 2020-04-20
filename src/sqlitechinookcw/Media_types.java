@@ -19,6 +19,7 @@ public class Media_types implements Serializable {
        private boolean mediaSending;
        private boolean mediaAdding;
        private boolean mediaDeleting;
+       private boolean mediaEditing;
        
        public Media_types(int mediaTypeId, String name){
            
@@ -94,6 +95,18 @@ public class Media_types implements Serializable {
        public void setMediaDeleting(boolean mediaDeleting){
     
          this.mediaDeleting = mediaDeleting;
+    
+       }
+       
+       public boolean getMediaEditing(){
+    
+         return mediaEditing;
+    
+       }
+    
+       public void setMediaEditing(boolean mediaEditing){
+    
+         this.mediaEditing = mediaDeleting;
     
        }
 

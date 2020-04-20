@@ -21,6 +21,7 @@ public class Track implements Serializable {
     private boolean trackSending;
     private boolean trackAdding;
     private boolean trackDeleting;
+    private boolean trackEditing;
     public int trackId;
     public String name;
     public int albumId;
@@ -57,6 +58,18 @@ public class Track implements Serializable {
     
     public Track(){
     
+    
+    }
+    
+    public boolean getTrackEditing(){
+    
+         return trackEditing;
+    
+    }
+    
+    public void setTrackEditing(boolean trackEditing){
+    
+         this.trackEditing = trackEditing;
     
     }
     
