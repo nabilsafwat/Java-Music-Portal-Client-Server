@@ -318,19 +318,20 @@ public class ClientHandlerThread implements Runnable {
     
     public synchronized void callTheEditTrack(int trackId, String name, int albumId, int mediaTypeId, int genreId, String composer, int milliseconds, int bytes, double unitPrice){
          
-         String selectSQL = "UPDATE Tracks SET name = ?" + "albumId = ?" + "mediaTypeId = ?" + "genreId = ?" + "composer = ?" + "milliseconds = ?" + "bytes = ?" + "unitPrice = ?" + "WHERE trackId = ?";
+         String selectSQL = "UPDATE tracks SET TrackId = '" + trackId + "', Name = '" + name + "', AlbumId = '" + albumId + "', MediaTypeId = '" + mediaTypeId +  "', GenreId = '" + genreId + "', Composer = '" + composer + "', Milliseconds = '" + milliseconds + "', Bytes = '" + bytes + "', UnitPrice = '" + unitPrice + "' WHERE TrackId = '" + trackId + "'";
          try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
              
-                  prep.setString(1, name);
-                  prep.setInt(2, albumId);
-                  prep.setInt(3, mediaTypeId);
-                  prep.setInt(4, genreId);
-                  prep.setString(5, composer);
-                  prep.setInt(6, milliseconds);
-                  prep.setInt(7, bytes);
-                  prep.setDouble(8, unitPrice);
-                  prep.setInt(9, trackId);
+                  /*prep.setInt(1, trackId);
+                  prep.setString(2, name);
+                  prep.setInt(3, albumId);
+                  prep.setInt(4, mediaTypeId);
+                  prep.setInt(5, genreId);
+                  prep.setString(6, composer);
+                  prep.setInt(7, milliseconds);
+                  prep.setInt(8, bytes);
+                  prep.setDouble(9, unitPrice);*/
+                  
                   
                   prep.executeUpdate();
                   
