@@ -21,7 +21,12 @@ public class Parcel implements Serializable {
     
     private Track track;
     private Media_types media;
-    
+    private Track userInputTrack;
+    private Media_types userInputMedia;
+    private Track userDeleteTrack;
+    private Media_types userDeleteMedia;
+    private Track userEditTrack;
+    private Media_types userEditMedia;
             
     public Parcel() {
     
@@ -46,6 +51,43 @@ public class Parcel implements Serializable {
     
     public Track getTrack() {
         return track;
+    }
+    
+    public Track getUserInputTrack(){
+    
+       return userInputTrack;
+    
+    }
+    
+    public Media_types getUserInputMedia(){
+    
+       return userInputMedia;
+    
+    }
+    
+    public Track getUserDeleteTrack(){
+    
+       return userDeleteTrack;
+    
+    }
+    
+    
+    public Media_types getUserDeleteMedia(){
+    
+      return userDeleteMedia;
+      
+    }
+    
+    public Track getUserEditTrack(){
+    
+      return userEditTrack;
+    
+    }
+    
+    public Media_types getUserEditMedia(){
+    
+      return userEditMedia;
+    
     }
 
     public Media_types getMedia() {

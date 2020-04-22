@@ -773,7 +773,7 @@ public class MyGUI extends javax.swing.JFrame {
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(track, null));
+                objectOutputStream.writeObject(new Parcel(track, media));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -821,7 +821,7 @@ public class MyGUI extends javax.swing.JFrame {
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(null, media));
+                objectOutputStream.writeObject(new Parcel(track, media));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -981,19 +981,19 @@ public class MyGUI extends javax.swing.JFrame {
             
             //Send data from Textfields
             
-            //Track userInputTrack = new Track();
-            track.trackId = Integer.parseInt(insertTrackId.getText());
-            track.name = insertTrackName.getText();
-            track.albumId = Integer.parseInt(insertAlbumId.getText());
-            track.mediaTypeId = Integer.parseInt(insertMediaTypeId.getText());
-            track.genreId = Integer.parseInt(insertGenreId.getText());
-            track.composer = insertComposer.getText();
-            track.milliseconds = Integer.parseInt(insertMilliseconds.getText());
-            track.bytes = Integer.parseInt(insertBytes.getText());
+            Track userInputTrack = new Track();
+            userInputTrack.trackId = Integer.parseInt(insertTrackId.getText());
+            userInputTrack.name = insertTrackName.getText();
+            userInputTrack.albumId = Integer.parseInt(insertAlbumId.getText());
+            userInputTrack.mediaTypeId = Integer.parseInt(insertMediaTypeId.getText());
+            userInputTrack.genreId = Integer.parseInt(insertGenreId.getText());
+            userInputTrack.composer = insertComposer.getText();
+            userInputTrack.milliseconds = Integer.parseInt(insertMilliseconds.getText());
+            userInputTrack.bytes = Integer.parseInt(insertBytes.getText());
             //System.out.println(insertUnitPrice.getText());
-            track.unitPrice = Double.parseDouble(insertUnitPrice.getText());
+            userInputTrack.unitPrice = Double.parseDouble(insertUnitPrice.getText());
             
-            track.setTrackAdding(true);
+            userInputTrack.setTrackAdding(true);
             
             /*String sendTrackID = iertTrackId.getText();
             String sendTrackName = insertTrackName.getText();
@@ -1008,7 +1008,7 @@ public class MyGUI extends javax.swing.JFrame {
             //track.setTrackAdding(true);
             
             try {
-                objectOutputStream.writeObject(new Parcel(track, null));
+                objectOutputStream.writeObject(new Parcel(userInputTrack, null));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1027,17 +1027,17 @@ public class MyGUI extends javax.swing.JFrame {
             //Send data from Textfields
             
             
-            //Media_types userInputMedia = new Media_types();
-            media.name = insertMediaTypeName.getText();
-            media.mediaTypeId = Integer.parseInt(insertMediaId.getText());
+            Media_types userInputMedia = new Media_types();
+            userInputMedia.name = insertMediaTypeName.getText();
+            userInputMedia.mediaTypeId = Integer.parseInt(insertMediaId.getText());
             
-            media.setMediaAdding(true);
+            userInputMedia.setMediaAdding(true);
             
             
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(null, media));
+                objectOutputStream.writeObject(new Parcel(null, userInputMedia));
                 
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -1052,12 +1052,13 @@ public class MyGUI extends javax.swing.JFrame {
     
         if (objectOutputStream != null && objectInputStream != null) {
     
-             track.trackId = Integer.parseInt(deleteTrackId.getText());
+             Track userDeleteTrack = new Track();
+             userDeleteTrack.trackId = Integer.parseInt(deleteTrackId.getText());
     
-             track.setTrackDeleting(true);
+             userDeleteTrack.setTrackDeleting(true);
              
              try {
-                objectOutputStream.writeObject(new Parcel(track, null));
+                objectOutputStream.writeObject(new Parcel(userDeleteTrack, null));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1072,13 +1073,14 @@ public class MyGUI extends javax.swing.JFrame {
     private void deleteTheMedia(){
     
         if (objectOutputStream != null && objectInputStream != null) {
+             
+             Media_types userDeleteMedia = new Media_types();
+             userDeleteMedia.mediaTypeId = Integer.parseInt(deleteMediaId.getText());
     
-             media.mediaTypeId = Integer.parseInt(deleteMediaId.getText());
-    
-             media.setMediaDeleting(true);
+             userDeleteMedia.setMediaDeleting(true);
              
              try {
-                objectOutputStream.writeObject(new Parcel(null, media));
+                objectOutputStream.writeObject(new Parcel(null, userDeleteMedia));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1097,21 +1099,23 @@ public class MyGUI extends javax.swing.JFrame {
     
         if (objectOutputStream != null && objectInputStream != null) {
             
-            track.trackId = Integer.parseInt(editTrackId.getText());
-            track.name = editTrackName.getText();
-            track.albumId = Integer.parseInt(editAlbumId.getText());
-            track.mediaTypeId = Integer.parseInt(editMediaTypeId.getText());
-            track.genreId = Integer.parseInt(editGenreId.getText());
-            track.composer = editComposer.getText();
-            track.milliseconds = Integer.parseInt(editMilliseconds.getText());
-            track.bytes = Integer.parseInt(editBytes.getText());
-            //System.out.println(insertUnitPrice.getText());
-            track.unitPrice = Double.parseDouble(editUnitPrice.getText());
+            Track userEditTrack = new Track();
             
-            track.setTrackEditing(true);
+            userEditTrack.trackId = Integer.parseInt(editTrackId.getText());
+            userEditTrack.name = editTrackName.getText();
+            userEditTrack.albumId = Integer.parseInt(editAlbumId.getText());
+            userEditTrack.mediaTypeId = Integer.parseInt(editMediaTypeId.getText());
+            userEditTrack.genreId = Integer.parseInt(editGenreId.getText());
+            userEditTrack.composer = editComposer.getText();
+            userEditTrack.milliseconds = Integer.parseInt(editMilliseconds.getText());
+            userEditTrack.bytes = Integer.parseInt(editBytes.getText());
+            //System.out.println(insertUnitPrice.getText());
+            userEditTrack.unitPrice = Double.parseDouble(editUnitPrice.getText());
+            
+            userEditTrack.setTrackEditing(true);
             
             try {
-                objectOutputStream.writeObject(new Parcel(track, null));
+                objectOutputStream.writeObject(new Parcel(userEditTrack, null));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1124,14 +1128,16 @@ public class MyGUI extends javax.swing.JFrame {
     private void editTheMedia(){
     
         if (objectOutputStream != null && objectInputStream != null) {
+            
+           Media_types userEditMedia = new Media_types(); 
     
-           media.mediaTypeId = Integer.parseInt(editMediaId.getText());
-           media.name = editMediaTypeName.getText();
+           userEditMedia.mediaTypeId = Integer.parseInt(editMediaId.getText());
+           userEditMedia.name = editMediaTypeName.getText();
            
-           media.setMediaEditing(true);
+           userEditMedia.setMediaEditing(true);
            
            try {
-                objectOutputStream.writeObject(new Parcel(null, media));
+                objectOutputStream.writeObject(new Parcel(null, userEditMedia));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }

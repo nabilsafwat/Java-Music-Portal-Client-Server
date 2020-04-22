@@ -346,7 +346,7 @@ public class ClientHandlerThread implements Runnable {
     
     public synchronized void callTheEditMedia(String name,int mediaTypeId){
     
-        String selectSQL = "UPDATE Media_types SET name = ?," + "mediaTypeId = ?" + "WHERE mediaTypeId = ?";
+        String selectSQL = "UPDATE Media_types SET MediaTypeId = '" + mediaTypeId + "', Name = '" + name + "' WHERE MediaTypeId = '" + mediaTypeId + "'";
          try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
              
