@@ -773,7 +773,7 @@ public class MyGUI extends javax.swing.JFrame {
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(track, media));
+                objectOutputStream.writeObject(new Parcel(track, null));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -782,13 +782,7 @@ public class MyGUI extends javax.swing.JFrame {
             Parcel reply = null;
             try {
                 reply = (Parcel)objectInputStream.readObject();
-                //reply = objectInputStream.readObject();
-                ArrayList<Track> tracks = reply.getTrackList();
-                for(Track t : tracks){
-                    System.out.print(t);
-                    System.out.print(" | ");
-                    System.out.println("\n");
-                }
+                //reply = objectInputStream.readObject();              
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
@@ -801,14 +795,22 @@ public class MyGUI extends javax.swing.JFrame {
             // 4. display message on textarea
             
             if (reply != null) {
-                
+                //boxForTrack.setText("Loading Data");
                 boxForTrack.setText(reply.getTrackList().toString());
                 
+            }
+            
+            else{
+            
+               System.out.println("Reply is empty");
+            
+            }
+            
             }
          else {
             labelStatus.setText("You must connect to the server first!!");
         }
-        }
+        
         
     }
     
@@ -821,7 +823,7 @@ public class MyGUI extends javax.swing.JFrame {
             
             
             try {
-                objectOutputStream.writeObject(new Parcel(track, media));
+                objectOutputStream.writeObject(new Parcel(null, media));
             } catch (IOException ex) {
                 Logger.getLogger(MyGUI.class.getName()).log(Level.SEVERE, null, ex);
             }

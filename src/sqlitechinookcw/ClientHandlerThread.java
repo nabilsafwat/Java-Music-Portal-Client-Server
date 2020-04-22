@@ -40,14 +40,13 @@ public class ClientHandlerThread implements Runnable {
     
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
-    ArrayList<Track> trackList = new ArrayList<>();
-    ArrayList<Media_types> mediaList = new ArrayList<>();
+    
     
     private static int connectionCount = 0;
     private final int connectionNumber;
     
-    Track track = new Track(trackList);
-    Media_types media = new Media_types(mediaList);
+    Track track = new Track();
+    Media_types media = new Media_types();
 
     /**
      * Constructor just initialises the connection to client.
@@ -88,10 +87,11 @@ public class ClientHandlerThread implements Runnable {
         try {
             while ((parcelRead = (Parcel)objectInputStream.readObject()) != null) {
                 System.out.println("Server: Read data from client: " + parcelRead + ".");
-                
+                ArrayList<Track> trackList = new ArrayList<>();
+                ArrayList<Media_types> mediaList = new ArrayList<>();
                 if(parcelRead.getTrack()!= null && parcelRead.getTrack().getTrackSending() == true){
                    callTheSynchroTracks(trackList);
-                   
+                   track = new Track(trackList);
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
                    //Track track = new Track(trackList);
                    objectOutputStream.writeObject(new Parcel(track, media));
@@ -101,7 +101,7 @@ public class ClientHandlerThread implements Runnable {
                 
                 else if(parcelRead.getMedia()!= null && parcelRead.getMedia().getMediaSending() == true){
                    callTheSynchroMedia(mediaList);
-                   
+                   media = new Media_types(mediaList);
                    //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
                    //Media_types media = new Media_types(mediaList);
                    objectOutputStream.writeObject(new Parcel(track, media));
@@ -192,6 +192,7 @@ public class ClientHandlerThread implements Runnable {
                         resultSet.getInt(7),
                         resultSet.getInt(8),
                         resultSet.getDouble(9));
+                
                 populateList.add(track);
             }
 
@@ -201,7 +202,7 @@ public class ClientHandlerThread implements Runnable {
     }
     
     public synchronized void callTheSynchroMedia(ArrayList<Media_types> populateList) {
-
+        
         String selectSQL = "SELECT * FROM media_types"; // Print all media types on screen
 
         try ( Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
@@ -217,6 +218,7 @@ public class ClientHandlerThread implements Runnable {
                 
                         
                 populateList.add(media);
+                System.out.println(media);
             }
 
         } catch (SQLException ex) {
