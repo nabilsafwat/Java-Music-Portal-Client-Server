@@ -350,8 +350,8 @@ public class ClientHandlerThread implements Runnable {
          try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
              
-                  prep.setString(1, name);
-                  prep.setInt(2, mediaTypeId);
+                  /*prep.setString(1, name);
+                  prep.setInt(2, mediaTypeId);*/
                   
                   
                   prep.executeUpdate();

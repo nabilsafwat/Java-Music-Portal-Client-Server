@@ -106,7 +106,7 @@ public class Media_types implements Serializable {
     
        public void setMediaEditing(boolean mediaEditing){
     
-         this.mediaEditing = mediaDeleting;
+         this.mediaEditing = mediaEditing;
     
        }
 
