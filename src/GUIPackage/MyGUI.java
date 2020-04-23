@@ -21,12 +21,12 @@ import sqlitechinookcw.Util;
 
 /**
  *
- * @author safwatn
+ * @author Nabil Safwat SID 8055129
  */
-public class MyGUI extends javax.swing.JFrame {
+public class MyGUI extends javax.swing.JFrame { //Extending from JFrame Library
 
-    Track track = new Track();
-    Media_types media = new Media_types();
+    Track track = new Track();   
+    Media_types media = new Media_types();       
     
     
     /**
@@ -733,7 +733,7 @@ public class MyGUI extends javax.swing.JFrame {
         }
     }
 
-    
+     //Connect to the server
      private void reconnectToServer() {
         closeConnection();
         labelStatus.setText("Status: Attempting connection to server");
@@ -749,7 +749,7 @@ public class MyGUI extends javax.swing.JFrame {
             labelStatus.setText("Status: Server not found!"); // connection failed
         }
     }
-     
+     //Keep reading for the server
      public void keepReadingFromServer() {
         while (true) {
             try {
@@ -763,7 +763,7 @@ public class MyGUI extends javax.swing.JFrame {
             }
         }
     }
-     
+     //Function to list all tracks
     private void listAllTracks(){
             //Sending
             if (objectOutputStream != null && objectInputStream != null) {
@@ -813,7 +813,7 @@ public class MyGUI extends javax.swing.JFrame {
         
         
     }
-    
+    //Function to list all Media Types
     private void listAllMediaTypes() {
         //Sending
             if (objectOutputStream != null && objectInputStream != null) {
@@ -862,7 +862,7 @@ public class MyGUI extends javax.swing.JFrame {
         
     }
     
-    
+    //Send all tracks to Printer
     private void printAllTracks(){
             
             //Sending
@@ -920,7 +920,7 @@ public class MyGUI extends javax.swing.JFrame {
             } 
             
     }
-    
+    //Send all media types to Printer
     private void printAllMedia(){
             //Sending
             if (objectOutputStream != null && objectInputStream != null) {
@@ -952,17 +952,17 @@ public class MyGUI extends javax.swing.JFrame {
             
             if (reply != null) {
                 
-                    PrinterJob printer = PrinterJob.getPrinterJob(); // this method calls to setup a job for printing pages
+                    PrinterJob printer = PrinterJob.getPrinterJob(); // This method calls to setup a job for printing pages
                     String printableString = Util.getFormattedMediaStringFromList(reply.getMediaList());
                     PrintableObject p = new PrintableObject();
                     p.stringToPrint = printableString;
                     printer.setPrintable(p);
-   	            printer.printDialog(); // show the print dialog
+   	            printer.printDialog(); // Show the print dialog
   
                 try {
-                     printer.print(); //if clicking ok in the print dialog, this will print the pages with the default format
+                     printer.print(); //Print the data
                 }
-                catch (PrinterException PrintException) { //catch the error during printing
+                catch (PrinterException PrintException) { 
                 }
                 
                 labelStatus.setText("Data sent to Server");
@@ -975,7 +975,7 @@ public class MyGUI extends javax.swing.JFrame {
     
     
     }
-    
+    //Function to send and recieve data to and from textfields
     private void addTheTrack(){
     
         if (objectOutputStream != null && objectInputStream != null) {
@@ -992,22 +992,9 @@ public class MyGUI extends javax.swing.JFrame {
             userInputTrack.composer = insertComposer.getText();
             userInputTrack.milliseconds = Integer.parseInt(insertMilliseconds.getText());
             userInputTrack.bytes = Integer.parseInt(insertBytes.getText());
-            //System.out.println(insertUnitPrice.getText());
             userInputTrack.unitPrice = Double.parseDouble(insertUnitPrice.getText());
             
             userInputTrack.setTrackAdding(true);
-            
-            /*String sendTrackID = iertTrackId.getText();
-            String sendTrackName = insertTrackName.getText();
-            String sendAlbumID = insertAlbumId.getText();
-            String sendMediaTypeID = insertMediaTypeId.getText();
-            String sendGenreID = insertGenreId.getText();
-            String sendComposer = insertComposer.getText();
-            String sendMilliseconds = insertMilliseconds.getText();
-            String sendBytes = insertBytes.getText();
-            String sendUnitPrice = insertUnitPrice.getText();*/
-            
-            //track.setTrackAdding(true);
             
             try {
                 objectOutputStream.writeObject(new Parcel(userInputTrack, null));
@@ -1019,16 +1006,12 @@ public class MyGUI extends javax.swing.JFrame {
             
         }
     }
-    
+    //Function to send and recieve data to and from textfields
     private void addTheMedia(){
     
         if (objectOutputStream != null && objectInputStream != null) {
             
-            
-            
             //Send data from Textfields
-            
-            
             Media_types userInputMedia = new Media_types();
             userInputMedia.name = insertMediaTypeName.getText();
             userInputMedia.mediaTypeId = Integer.parseInt(insertMediaId.getText());
@@ -1049,7 +1032,7 @@ public class MyGUI extends javax.swing.JFrame {
             
         }
     }
-    
+    //Function which sends the track ID number to delete
     private void deleteTheTrack(){
     
         if (objectOutputStream != null && objectInputStream != null) {
@@ -1071,7 +1054,7 @@ public class MyGUI extends javax.swing.JFrame {
     
     
     }
-    
+    //Function which sends the media type ID to deletes
     private void deleteTheMedia(){
     
         if (objectOutputStream != null && objectInputStream != null) {
@@ -1096,7 +1079,7 @@ public class MyGUI extends javax.swing.JFrame {
     
     }
     
-    
+    //Function to send track editing data
     private void editTheTrack(){
     
         if (objectOutputStream != null && objectInputStream != null) {
@@ -1126,7 +1109,7 @@ public class MyGUI extends javax.swing.JFrame {
     
         }
     }
-    
+    //Function to send media type editing datas
     private void editTheMedia(){
     
         if (objectOutputStream != null && objectInputStream != null) {

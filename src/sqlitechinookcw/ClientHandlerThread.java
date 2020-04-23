@@ -20,16 +20,8 @@ import java.util.logging.Logger;
 import java.sql.DriverManager;
 
 /**
- * This is our thread class with the responsibility of handling client requests
- * once the client has connected. A socket is stored to allow connection.
- *
- * There are two ways to make a thread, one is to extend from the Thread class.
- * The other way is to implement the Runnable interface. Implementing Runnable
- * is better because we do not have to waste our inheritance option.
- *
- * @author Chris Bass
- * @date 06/04/2016
- */
+ * @author Nabil Safwat SID 8055129
+ **/
 public class ClientHandlerThread implements Runnable {
 
     private final Socket socket;
@@ -92,8 +84,6 @@ public class ClientHandlerThread implements Runnable {
                 if(parcelRead.getTrack()!= null && parcelRead.getTrack().getTrackSending() == true){
                    callTheSynchroTracks(trackList);
                    track = new Track(trackList);
-                   //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
-                   //Track track = new Track(trackList);
                    objectOutputStream.writeObject(new Parcel(track, media));
                    
                    }
@@ -102,8 +92,6 @@ public class ClientHandlerThread implements Runnable {
                 else if(parcelRead.getMedia()!= null && parcelRead.getMedia().getMediaSending() == true){
                    callTheSynchroMedia(mediaList);
                    media = new Media_types(mediaList);
-                   //objectOutputStream = new ObjectOutputStream(new Parcel(track, null));
-                   //Media_types media = new Media_types(mediaList);
                    objectOutputStream.writeObject(new Parcel(track, media));
                    
                  } 
@@ -115,7 +103,7 @@ public class ClientHandlerThread implements Runnable {
                 
                 
                 }
-                //parcelRead.getTrack()!= null && parcelRead.getMedia()!= null && 
+                
                 
                 else if(parcelRead.getMedia() != null && parcelRead.getMedia().getMediaAdding() == true){
                 
@@ -323,16 +311,6 @@ public class ClientHandlerThread implements Runnable {
          String selectSQL = "UPDATE tracks SET TrackId = '" + trackId + "', Name = '" + name + "', AlbumId = '" + albumId + "', MediaTypeId = '" + mediaTypeId +  "', GenreId = '" + genreId + "', Composer = '" + composer + "', Milliseconds = '" + milliseconds + "', Bytes = '" + bytes + "', UnitPrice = '" + unitPrice + "' WHERE TrackId = '" + trackId + "'";
          try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
-             
-                  /*prep.setInt(1, trackId);
-                  prep.setString(2, name);
-                  prep.setInt(3, albumId);
-                  prep.setInt(4, mediaTypeId);
-                  prep.setInt(5, genreId);
-                  prep.setString(6, composer);
-                  prep.setInt(7, milliseconds);
-                  prep.setInt(8, bytes);
-                  prep.setDouble(9, unitPrice);*/
                   
                   
                   prep.executeUpdate();
@@ -351,9 +329,6 @@ public class ClientHandlerThread implements Runnable {
         String selectSQL = "UPDATE Media_types SET MediaTypeId = '" + mediaTypeId + "', Name = '" + name + "' WHERE MediaTypeId = '" + mediaTypeId + "'";
          try (Connection conn = ConnectionFactory.getConnection(); // auto close the connection object after try
                  PreparedStatement prep = conn.prepareStatement(selectSQL);) {
-             
-                  /*prep.setString(1, name);
-                  prep.setInt(2, mediaTypeId);*/
                   
                   
                   prep.executeUpdate();
@@ -371,9 +346,7 @@ public class ClientHandlerThread implements Runnable {
     }
   
 }
- 
-
-    /**
+     /**
      * Private helper method outputs to standard output stream for debugging.
      * @param say the String to write to standard output stream.
      */

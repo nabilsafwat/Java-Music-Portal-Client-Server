@@ -9,12 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * A 'Bean' is a very simple class which basically forms a container object for
- * moving related data around an application. Beans implement the Serializable
- * interface and have public properties to get and set the data. In this case we
- * are using this class to represent the data in the database.
- *
- * @author Chris Bass
+ * @author Nabil Safwat SID 8055129
  */
 public class Track implements Serializable {
 

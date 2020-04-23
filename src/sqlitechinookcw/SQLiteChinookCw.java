@@ -21,14 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class is our main class for the server-side program. At the moment it
- * demonstrates how to make a connection to the SQLite database and then just
- * outputs the data to the console. But ideally this class should start a
- * (perhaps threaded) server via server sockets (to-do) and then either access
- * the SQLite database as need be, or let each thread do the SQLite access.
- *
- * @author Chris Bass
- */
+ * @author Nabil Safwat SID 8055129
+ **/
 public class SQLiteChinookCw {
 
     /**

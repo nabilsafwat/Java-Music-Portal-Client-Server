@@ -23,9 +23,7 @@ public class ConnectionFactory {
     /**
      * Get a connection to our SQLite database.
      *
-     * @return Connection object, remember to close this connection object after
-     * using to avoid memory leaks, connection objects are expensive.
-     * @throws java.sql.SQLException
+     * @author Nabil Safwat SID 8055129
      */
     public static Connection getConnection() throws SQLException {
         Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);

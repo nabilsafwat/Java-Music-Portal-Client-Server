@@ -10,13 +10,9 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * A parcel class for encapsulating the data we want to send back and forth.
- * Implements the Serializable interface so can be sent via object streams.
- * 
- * @author Chris Bass
- * @date 06/04/2016
- */
+/** 
+ * @author Nabil Safwat SID 8055129
+ **/
 public class Parcel implements Serializable {
     
     private Track track;

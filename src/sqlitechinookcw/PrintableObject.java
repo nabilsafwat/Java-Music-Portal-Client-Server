@@ -12,16 +12,15 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
 /**
- *
- * @author nadiaislam
- */
+ *@author Nabil Safwat SID 8055129
+ **/
 public class PrintableObject implements Printable {
     public String stringToPrint;
     
     @Override
     public int print(Graphics g, PageFormat pf, int pageIndex) throws PrinterException {
         if(stringToPrint == null)
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet."); 
         Graphics2D g2d = (Graphics2D)g;
         g2d.translate(pf.getImageableX(), pf.getImageableY());
         g.drawString(stringToPrint,100, 100);

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 /**
  *
- * @author safwatn
+ * @author Nabil Safwat SID 8055129
  */
 public class Media_types implements Serializable {
     
